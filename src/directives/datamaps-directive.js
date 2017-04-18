@@ -18,6 +18,7 @@ angular
       link: function(scope, element, attrs) {
 
         var zoom;
+        var lastScale = 1;
 
         // Generate base map options
         function mapOptions() {
@@ -38,7 +39,7 @@ angular
 
               function redraw() {
                 datamap.svg.selectAll('g')
-                  .attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
+                  .attr('transform', 'translate(' + d3.event.translate + ')scale(' + lastScale + ')');
               }
               if (angular.isDefined(attrs.onClick)) {
                 datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
@@ -188,7 +189,7 @@ angular
 
             // Update zoom value itself
             zoom.scale(target_scale).translate([x,y]);
-
+            lastScale = target_scale;
             // Update map
             scope.datamap.svg.selectAll('g').attr('transform', 'translate(' + [x, y] + ')scale(' + target_scale + ')');
           }
