@@ -19,6 +19,7 @@ angular
 
         var zoom;
         var lastScale = 1;
+        var lastTranslate = null;
 
         // Generate base map options
         function mapOptions() {
@@ -39,8 +40,9 @@ angular
 
               function redraw() {
                 if(d3.event.scale == lastScale){
+                  lastTranslate = d3.event.translate;
                   datamap.svg.selectAll('g')
-                    .attr('transform', 'translate(' + d3.event.translate + ')scale(' + lastScale + ')');
+                    .attr('transform', 'translate(' + lastTranslate + ')scale(' + lastScale + ')');
                 }
               }
               if (angular.isDefined(attrs.onClick)) {
