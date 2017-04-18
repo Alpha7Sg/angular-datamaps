@@ -29,10 +29,10 @@ angular.module('datamaps').directive('datamap', [
             done: function (datamap) {
               zoom = d3.behavior.zoom().scaleExtent([
                 1,
-                10
+                1
               ]).on('zoom', redraw);
               function redraw() {
-                datamap.svg.selectAll('g').attr('transform', 'translate(' + d3.event.translate + ')');  //remove wheel scaling/zoom
+                datamap.svg.selectAll('g').attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
               }
               if (angular.isDefined(attrs.onClick)) {
                 datamap.svg.selectAll('.datamaps-subunit').on('click', function (geography) {

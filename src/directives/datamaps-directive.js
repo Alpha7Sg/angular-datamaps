@@ -33,13 +33,12 @@ angular
             data: {},
             done: function(datamap) {
               zoom = d3.behavior.zoom()
-                .scaleExtent([1, 10])
+                .scaleExtent([1, 1])
                 .on('zoom', redraw);
 
               function redraw() {
                 datamap.svg.selectAll('g')
-                  //.attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
-                  .attr('transform', 'translate(' + d3.event.translate + ')'); //remove wheel scaling/zoom
+                  .attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
               }
               if (angular.isDefined(attrs.onClick)) {
                 datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
