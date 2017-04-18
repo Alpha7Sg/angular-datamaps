@@ -11,7 +11,8 @@ angular.module('datamaps').directive('datamap', [
         plugins: '=?',
         zoomable: '@?',
         onClick: '&?',
-        pluginData: '='
+        pluginData: '=',
+        api: '=?'
       },
       link: function (scope, element, attrs) {
         // Generate base map options
@@ -21,6 +22,7 @@ angular.module('datamaps').directive('datamap', [
             scope: 'usa',
             height: scope.height,
             width: scope.width,
+            aspectRatio: scope.aspectRatio,
             fills: { defaultFill: '#b9b9b9' },
             data: {},
             done: function (datamap) {
@@ -48,6 +50,7 @@ angular.module('datamaps').directive('datamap', [
             // Update bounding box
             scope.width = (map.options || {}).width || null;
             scope.height = (map.options || {}).height || (scope.width ? scope.width * 0.5 : null);
+            scope.aspectRatio = (map.options || {}).aspectRatio || null;
             scope.legendHeight = (map.options || {}).legendHeight || 50;
             // Set a few defaults for the directive
             scope.mapOptions = mapOptions();
