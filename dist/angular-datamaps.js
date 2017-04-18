@@ -16,8 +16,7 @@ angular.module('datamaps').directive('datamap', [
       },
       link: function (scope, element, attrs) {
         var zoom;
-        var lastScale = null;
-        var lastTranslate = null;
+        var lastScale = 1;
         // Generate base map options
         function mapOptions() {
           return {
@@ -34,10 +33,7 @@ angular.module('datamaps').directive('datamap', [
                 10
               ]).on('zoom', redraw);
               function redraw() {
-                if (d3.event.scale == lastScale || lastScale == null) {
-                  lastTranslate = d3.event.translate;
-                  datamap.svg.selectAll('g').attr('transform', 'translate(' + lastTranslate + ')scale(' + lastScale + ')');
-                }
+                datamap.svg.selectAll('g').attr('transform', 'translate(' + d3.event.translate + ')scale(' + lastScale + ')');
               }
               if (angular.isDefined(attrs.onClick)) {
                 datamap.svg.selectAll('.datamaps-subunit').on('click', function (geography) {
