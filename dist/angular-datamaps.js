@@ -133,6 +133,7 @@ angular.module('datamaps').directive('datamap', [
                 0,
                 0
               ]);
+              lastScale = 1;
               scope.datamap.svg.selectAll('g').attr('transform', 'translate(' + [
                 0,
                 0

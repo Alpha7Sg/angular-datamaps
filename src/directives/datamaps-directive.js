@@ -164,6 +164,7 @@ angular
 
             if (zoomType === 'reset') {
               zoom.scale(1).translate([0,0]);
+              lastScale = 1;
               scope.datamap.svg.selectAll('g').attr('transform', 'translate(' + [0, 0] + ')scale(' + 1 + ')');
               return false;
             } else if (zoomType === 'out') {
