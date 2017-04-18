@@ -18,7 +18,7 @@ angular
       link: function(scope, element, attrs) {
 
         var zoom;
-        var lastScale = 1;
+        var lastScale = null;
         var lastTranslate = null;
 
         // Generate base map options
@@ -39,7 +39,7 @@ angular
                 .on('zoom', redraw);
 
               function redraw() {
-                if(d3.event.scale == lastScale){
+                if(d3.event.scale == lastScale || lastScale == null){
                   lastTranslate = d3.event.translate;
                   datamap.svg.selectAll('g')
                     .attr('transform', 'translate(' + lastTranslate + ')scale(' + lastScale + ')');
