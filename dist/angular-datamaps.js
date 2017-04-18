@@ -30,7 +30,7 @@ angular.module('datamaps').directive('datamap', [
             done: function (datamap) {
               zoom = d3.behavior.zoom().scaleExtent([
                 1,
-                1
+                10
               ]).on('zoom', redraw);
               function redraw() {
                 datamap.svg.selectAll('g').attr('transform', 'translate(' + d3.event.translate + ')scale(' + lastScale + ')');

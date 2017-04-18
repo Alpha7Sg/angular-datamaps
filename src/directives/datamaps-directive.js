@@ -34,7 +34,7 @@ angular
             data: {},
             done: function(datamap) {
               zoom = d3.behavior.zoom()
-                .scaleExtent([1, 1])
+                .scaleExtent([1, 10])
                 .on('zoom', redraw);
 
               function redraw() {
