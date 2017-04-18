@@ -38,8 +38,10 @@ angular
                 .on('zoom', redraw);
 
               function redraw() {
+                if(d3.event.scale == lastScale){
                   datamap.svg.selectAll('g')
                     .attr('transform', 'translate(' + d3.event.translate + ')scale(' + lastScale + ')');
+                }
               }
               if (angular.isDefined(attrs.onClick)) {
                 datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
