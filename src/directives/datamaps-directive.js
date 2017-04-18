@@ -13,11 +13,10 @@ angular
         zoomable: '@?', //zoomable toggle [optional]
         onClick: '&?',  //geography onClick event [optional],
         pluginData: '=', //datamaps plugin data object where keys are plugin names [optional]
-        api: '=?'
+        api: '=?'       //hook into datamaps API methods [optional]
       },
       link: function(scope, element, attrs) {
 
-        //adding zoom
         var zoom;
 
         // Generate base map options
@@ -33,6 +32,10 @@ angular
             },
             data: {},
             done: function(datamap) {
+              zoom = d3.behavior.zoom()
+                .scaleExtent([1, 10])
+                .on('zoom', redraw);
+
               function redraw() {
                 datamap.svg.selectAll('g')
                   .attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
@@ -43,9 +46,6 @@ angular
                 });
               }
               if (angular.isDefined(attrs.zoomable)) {
-                zoom = d3.behavior.zoom()
-                  .scaleExtent([1, 10])
-                  .on('zoom', redraw);
                 datamap.svg.call(zoom);
               }
             }
@@ -150,6 +150,7 @@ angular
                 'padding-bottom': scope.legendHeight + 'px'
               });
           },
+
           zoomClick: function(zoomType, factor) {
             var zoomType = zoomType || 'reset';
             var factor = factor || 1.2;
@@ -169,7 +170,7 @@ angular
             var target_scale = scale * factor;
 
             // If we're already at an extent, done
-            if (target_scale === extent[0] || target_scale === extent[1]) {
+            if (target_scale < extent[0] || target_scale === extent[1]) {
               return false;
             }
 
