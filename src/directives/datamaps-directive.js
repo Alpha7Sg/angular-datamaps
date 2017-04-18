@@ -38,7 +38,8 @@ angular
 
               function redraw() {
                 datamap.svg.selectAll('g')
-                  .attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
+                  //.attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
+                  .attr('transform', 'translate(' + d3.event.translate + ')'); //remove wheel scaling/zoom
               }
               if (angular.isDefined(attrs.onClick)) {
                 datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
