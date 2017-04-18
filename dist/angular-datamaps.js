@@ -15,7 +15,6 @@ angular.module('datamaps').directive('datamap', [
         api: '=?'
       },
       link: function (scope, element, attrs) {
-        //adding zoom
         var zoom;
         // Generate base map options
         function mapOptions() {
@@ -28,6 +27,10 @@ angular.module('datamaps').directive('datamap', [
             fills: { defaultFill: '#b9b9b9' },
             data: {},
             done: function (datamap) {
+              zoom = d3.behavior.zoom().scaleExtent([
+                1,
+                10
+              ]).on('zoom', redraw);
               function redraw() {
                 datamap.svg.selectAll('g').attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
               }
@@ -37,10 +40,6 @@ angular.module('datamaps').directive('datamap', [
                 });
               }
               if (angular.isDefined(attrs.zoomable)) {
-                zoom = d3.behavior.zoom().scaleExtent([
-                  1,
-                  10
-                ]).on('zoom', redraw);
                 datamap.svg.call(zoom);
               }
             }
@@ -141,7 +140,7 @@ angular.module('datamaps').directive('datamap', [
             }
             var target_scale = scale * factor;
             // If we're already at an extent, done
-            if (target_scale === extent[0] || target_scale === extent[1]) {
+            if (target_scale < extent[0] || target_scale === extent[1]) {
               return false;
             }
             // If the factor is too much, scale it down to reach the extent exactly
